@@ -1,11 +1,18 @@
 import { Avatar, Toolbar, Button, Typography, Box } from '@mui/material'
-// import { Typography, Box } from '@mui/material'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 import { NavBar, Heading, Container } from './styles'
 
 const Navbar = () => {
-    const user = null
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+    console.log("user", user);
+    useEffect(() => {
+        const token = user?.token;
+         console.log("User Token Id:",token)
+        //JWT
+        setUser(JSON.parse(localStorage.getItem('profile')))
+    }, [user?.token])
+
     return (
         <NavBar position="static" color="inherit">
             <Container>
