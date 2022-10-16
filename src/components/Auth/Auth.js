@@ -7,28 +7,32 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from "react-router-dom"
 import Input from './Input'
 import { PaperContainer } from './styles'
-import { googleAuth } from '../../actions/authAction';
+import { GAUTH } from '../../constants/authtypes';
 
 const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const handleSubmit = () => { }
+
     const handleChange = () => { }
+
     const handleShowPassword = () => setShowPassword(!showPassword)
+
     const googleSuccess = async (res) => {
         const result = res?.profileObj;
         const token = res?.tokenId;
-        const data = { result, token }
         try {
-            dispatch(googleAuth(data))
+            dispatch({ type: GAUTH, data: {result,token} })
             navigate("/")
         } catch (error) {
             console.log(error)
         }
     }
+
     const googleFailure = (err) => {
         console.log(err)
         console.log('Google Sign In was unsuccessful, Try again later')
