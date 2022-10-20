@@ -1,6 +1,6 @@
 import { Avatar, Toolbar, Button, Typography, Box } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate,useLocation } from "react-router-dom"
+import { Link, useNavigate, useLocation } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { NavBar, Heading, Container } from './styles'
 import { LOGOUT } from '../../constants/authtypes'
@@ -16,7 +16,7 @@ const Navbar = () => {
         console.log("User Token Id:", token)
         //JWT
         setUser(JSON.parse(localStorage.getItem('profile')))
-    }, [user?.token,location])
+    }, [user?.token, location])
 
     const logOut = () => {
         dispatch({ type: LOGOUT })

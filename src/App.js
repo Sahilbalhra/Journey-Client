@@ -1,7 +1,9 @@
 import Home from "./components/Home/Home";
 import { Container } from "@mui/material";
 import React from "react";
-import Navbar from "./components/Navbar/Navbar";
+// import Navbar from "./components/Navbar/Navbar";
+import NavBar from "./components/Navbar/Header"
+
 import {
   BrowserRouter,
   Routes,
@@ -21,7 +23,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Container maxWidth="lg">
-        <Navbar />
+        <NavBar />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />

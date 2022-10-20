@@ -7,18 +7,41 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useNavigate } from "react-router-dom"
 import Input from './Input'
 import { PaperContainer } from './styles'
-import { GAUTH } from '../../constants/authtypes';
+import { AUTH } from '../../constants/authtypes';
+import { signin, signup } from '../../actions/authAction';
+
+const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: ""
+}
 
 const Auth = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isSignup, setIsSignup] = useState(false)
+    const [formData, setFormData] = useState(initialState)
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const handleSubmit = () => { }
 
-    const handleChange = () => { }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (isSignup) {
+            dispatch(signup(formData, navigate))
+        } else {
+            dispatch(signin(formData, navigate))
+
+        }
+        console.log("form data:", formData)
+
+    }
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
 
     const handleShowPassword = () => setShowPassword(!showPassword)
 
@@ -26,7 +49,7 @@ const Auth = () => {
         const result = res?.profileObj;
         const token = res?.tokenId;
         try {
-            dispatch({ type: GAUTH, data: {result,token} })
+            dispatch({ type: AUTH, data: { result, token } })
             navigate("/")
         } catch (error) {
             console.log(error)
@@ -71,7 +94,6 @@ const Auth = () => {
                         onSuccess={googleSuccess}
                         onFailure={googleFailure}
                         cookiePolicy="single_host_origin"
-
                     />
                     <Grid container justifyContent="center" mt={1}>
                         <Grid item>
