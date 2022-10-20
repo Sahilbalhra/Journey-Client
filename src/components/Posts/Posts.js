@@ -5,7 +5,7 @@ import Post from "./Post/Post"
 
 const Posts = ({ setCurrentId }) => {
   const posts = useSelector((state) => state.postsReducer)
-  console.log("Posts are:", posts);
+  // console.log("Posts are:", posts);
   return (
     <>
       {

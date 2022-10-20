@@ -35,7 +35,7 @@ const Auth = () => {
             dispatch(signin(formData, navigate))
 
         }
-        console.log("form data:", formData)
+        // console.log("form data:", formData)
 
     }
 

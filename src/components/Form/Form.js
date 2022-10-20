@@ -32,7 +32,7 @@ export default function Form({ currentId, setCurrentId }) {
     } else {
       dispatch(createPost({ ...postData, name: user?.result?.name }))
     }
-    Clear()
+    // Clear()
   }
 
   const Clear = () => {
