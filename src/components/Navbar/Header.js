@@ -46,7 +46,7 @@ function Navbar() {
                     </Heading>
                     {user ? (<Box sx={{ flexGrow: 0 }}>
                         <IconButton onClick={handleOpenUserMenu}>
-                            <Avatar src={user.result.imageUrl} alt={user.result.name}></Avatar>
+                            <Avatar src={user.result.imageUrl} alt={user.result.name}>{user.result.name.charAt(0)}</Avatar>
                         </IconButton>
                         <Menu
                             sx={{ mt: '45px' }}
