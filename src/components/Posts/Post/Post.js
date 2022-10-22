@@ -33,7 +33,7 @@ const Post = ({ post, setCurrentId }) => {
 
 
   return (
-    <MainCard>
+    <MainCard raised elevation={6}>
       <Media image={post.selectedFile} title={post.title}></Media>
       <Div>
         <Typography variant="h6" color="white">{post.name}</Typography>

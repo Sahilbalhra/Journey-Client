@@ -15,6 +15,7 @@ import { gapi } from "gapi-script";
 import PostDetails from "./components/PostDetails/PostDetails";
 
 const App = () => {
+  
   const user = JSON.parse(localStorage.getItem('profile'))
 
   gapi.load("client:auth2", () => {

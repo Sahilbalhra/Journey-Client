@@ -47,7 +47,7 @@ export default function Form({ currentId, setCurrentId }) {
 
   if (!user?.result?.name) {
     return (
-      <Paper sx={{ padding: "2rem" }}>
+      <Paper sx={{ padding: "2rem" }} elevation={6}>
         <Typography variant="h6" align='center'>
           Please Sign In to create your own memories and like other's memories.
         </Typography>

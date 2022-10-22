@@ -1,5 +1,5 @@
 import * as api from "../api/index"
-import { FETCH_ALL, DELETE, UPDATE, LIKE, CREATE } from "../constants/actiontypes";
+import { FETCH_ALL, FETCH_BY_SEARCH, DELETE, UPDATE, LIKE, CREATE } from "../constants/actiontypes";
 
 //Action Creater
 //thunk is used for async actions
@@ -14,6 +14,18 @@ export const getPosts = () => async (dispatch) => {
     }
 
 }
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+    try {
+        const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
+        const action = { type: FETCH_BY_SEARCH, paylaod: data }
+        dispatch(action)
+    } catch (error) {
+        console.log(error)
+
+    }
+
+}
+
 export const createPost = (post) => async (dispatch) => {
     try {
         const { data } = await api.createPost(post)
@@ -49,3 +61,4 @@ export const likePost = (id) => async (dispatch) => {
         console.log(error);
     }
 }
+
