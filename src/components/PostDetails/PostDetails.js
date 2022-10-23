@@ -1,16 +1,22 @@
-/* eslint-disable no-unused-vars */
+
 import React, { useEffect } from 'react'
 import { Paper, Typography, CircularProgress, Divider, Box } from "@mui/material"
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 import { useParams, useNavigate } from 'react-router-dom'
-import { getPost } from '../../actions/postsAction'
+import { getPost, getPostsBySearch } from '../../actions/postsAction'
+import CommentSection from './CommentSection'
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.postsReducer);
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { id } = useParams()
   // dispatch(getPost(id))
+  useEffect(() => {
+    if (post) {
+      dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }))
+    }
+  }, [post, dispatch])
 
   useEffect(() => {
     console.log("dispatching action")
@@ -26,6 +32,8 @@ const PostDetails = () => {
     </Paper>
 
   }
+
+  const recommendedPosts = posts.filter(({ _id }) => _id !== posts._id)
   return (
     <Paper sx={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
       <Box component="div" style={{ display: "flex", width: "100%", maxHeight: "600px" }}>
@@ -38,7 +46,7 @@ const PostDetails = () => {
           <Divider />
           <Typography variant="body1"><strong>Realtime Chat -coming soon</strong></Typography>
           <Divider />
-          <Typography variant="body1"><strong>Comments-coming soon!</strong></Typography>
+          <CommentSection post={post} />
           <Divider />
         </Box>
         <Box component="div" style={{ width: "50%", height: "100%", marginLeft: "1rem" }}>
@@ -46,6 +54,26 @@ const PostDetails = () => {
           </Box>
         </Box>
       </Box>
+      {recommendedPosts.length && (
+        <Box component="div">
+          <Typography variant="h5">You might also like :</Typography>
+          <Divider />
+          <Box component="div">
+            {
+              recommendedPosts.map(({ title, message, name, likes, selectedFile, _id }) => (
+                <Box style={{ margin: '20px', cursor: "pointer" }} onClick={() => navigate(`/posts/${_id}`)} key={_id}>
+                  <Typography variant="h6">{title}</Typography>
+                  <Typography variant="subtitle2">{name}</Typography>
+                  <Typography variant="subtitle2">{message}</Typography>
+                  <Typography variant="subtitle1">Likes:{likes}</Typography>
+                  <Box component="img" width="200px" src={selectedFile} alt="post image" />
+                </Box>
+              ))
+            }
+          </Box>
+        </Box>
+
+      )}
     </Paper>
   )
 }

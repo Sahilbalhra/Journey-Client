@@ -4,6 +4,7 @@ import FileBase from "react-file-base64"
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../../actions/postsAction'
 import { MainContainer, FormContainer, FileInput } from './styles'
+import { useNavigate } from 'react-router-dom'
 
 export default function Form({ currentId, setCurrentId }) {
   const [postData, setPostData] = useState({
@@ -13,8 +14,9 @@ export default function Form({ currentId, setCurrentId }) {
     selectedFile: ''
   })
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
-  const post = useSelector(state => currentId ? state.postsReducer.find(p => p._id === currentId) : null)
+  const post = useSelector(state => currentId ? state.postsReducer.posts.find(p => p._id === currentId) : null)
 
   const user = JSON.parse(localStorage.getItem('profile'))
 
@@ -30,9 +32,9 @@ export default function Form({ currentId, setCurrentId }) {
       dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
 
     } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }))
+      dispatch(createPost({ ...postData, name: user?.result?.name }), navigate)
     }
-    // Clear()
+    Clear()
   }
 
   const Clear = () => {
