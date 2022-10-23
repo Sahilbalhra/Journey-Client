@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { GridContainer } from './styles'
 import { Grid, Container, Grow, Paper, AppBar, TextField, Button } from '@mui/material'
 import { MuiChipsInput } from 'mui-chips-input'
 import Posts from '../Posts/Posts'
 import Form from '../Form/Form'
 import { useDispatch } from 'react-redux'
-import { getPosts, getPostsBySearch } from '../../actions/postsAction'
+import { getPostsBySearch } from '../../actions/postsAction'
 import Paginate from '../Pagination/Pagination'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -24,9 +24,7 @@ const Home = () => {
 
     const searchQuery = query.get('searchQuery')
 
-    useEffect(() => {
-        dispatch(getPosts());
-    }, [currentId, dispatch])
+
 
     const searchPosts = () => {
         if (search.trim() || tags) {
@@ -71,9 +69,11 @@ const Home = () => {
 
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
-                        <Paper elevation={4} sx={{ padding: "1rem", marginTop: "0.5rem", justifyContent: "space-around" }}>
-                            <Paginate />
-                        </Paper>
+                        {(!searchQuery && !tags.length) && (
+                            <Paper elevation={6} sx={{ padding: "0.5rem", marginTop: "0.5rem" }}>
+                                <Paginate page={page} />
+                            </Paper>
+                        )}
                     </Grid>
                 </GridContainer>
             </Container>

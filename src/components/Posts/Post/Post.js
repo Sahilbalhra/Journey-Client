@@ -7,15 +7,18 @@ import { CardContent, Button } from '@mui/material'
 import { Delete, ThumbUpAlt, ThumbUpAltOutlined } from '@mui/icons-material'
 import { useDispatch } from "react-redux"
 import { deletePost, likePost, getPosts } from '../../../actions/postsAction';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ post, setCurrentId }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem('profile'))
 
+
   const Likes = () => {
 
-    if (post.likes.length > 0) {
+    if (post?.likes?.length > 0) {
       return post.likes.find(like => like === (user?.result?.googleId || user?.result?._id))
         ? (
           <>
@@ -26,14 +29,14 @@ const Post = ({ post, setCurrentId }) => {
             <ThumbUpAltOutlined fontSize='small' />&nbsp;{post.likes.length}{post.likes.length === 1 ? "Like" : "Likes"}
           </>
         )
-    } else {
-      return <> <ThumbUpAltOutlined fontSize='small' />&nbsp;Like</>
     }
+    return <> <ThumbUpAltOutlined fontSize='small' />&nbsp;Like</>
+
   }
 
 
   return (
-    <MainCard raised elevation={6}>
+    <MainCard raised elevation={6} onClick={() => navigate(`/posts/${post._id}`)}>
       <Media image={post.selectedFile} title={post.title}></Media>
       <Div>
         <Typography variant="h6" color="white">{post.name}</Typography>

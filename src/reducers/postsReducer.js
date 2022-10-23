@@ -1,20 +1,35 @@
-import { FETCH_ALL, UPDATE, LIKE, DELETE, CREATE, FETCH_BY_SEARCH } from "../constants/actiontypes"
-export const postsReducer = (posts = [], action) => {
+import { FETCH_ALL, FETCH_POST, UPDATE, LIKE, DELETE, CREATE, FETCH_BY_SEARCH, START_LOADING, END_LOADING } from "../constants/actiontypes"
+export const postsReducer = (state = { isLoading: true, posts: [] }, action) => {
     switch (action.type) {
+        case START_LOADING:
+            return { ...state, isLoading: true }
+        case END_LOADING:
+            return { ...state, isLoading: false }
         case FETCH_ALL:
-            return action.paylaod
+            return {
+                ...state,
+                posts: action.paylaod.data,
+                currentPage: action.paylaod.currentPage,
+                numberOfPages: action.paylaod.numberOfPages
+            }
+        case FETCH_POST:
+            console.log("post reducer:", action.paylaod)
+            return { ...state, post: action.paylaod }
         case FETCH_BY_SEARCH:
-            return action.paylaod
+            return {
+                ...state,
+                posts: action.paylaod,
+            }
         case CREATE:
-            return [...posts, action.paylaod]
+            return { ...state, posts: [...state.posts, action.paylaod] }
         case UPDATE || LIKE:
-            return posts.map((post) => post._id === action.paylaod._id ? action.paylaod : post)
+            return { ...state, posts: state.posts.map((post) => post._id === action.paylaod._id ? action.paylaod : post) }
         // case LIKE:
         //     return posts.map((post) => post._id === action.paylaod._id ? action.paylaod : post)
         case DELETE:
-            return posts.filter((post) => post._id !== action.paylaod)
+            return { ...state, posts: state.posts.filter((post) => post._id !== action.paylaod) }
 
         default:
-            return posts
+            return state
     }
 }

@@ -56,7 +56,7 @@ export default function Form({ currentId, setCurrentId }) {
   }
 
   return (
-    <MainContainer elevation={3} sx={{
+    <MainContainer elevation={6} sx={{
       '& .MuiTextField-root': { m: 1 },
     }}>
       <FormContainer autoComplete='off' noValidate onSubmit={handleSybmit}>
